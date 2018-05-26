@@ -1,0 +1,19 @@
+{
+  "name": "p2p-microblog",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify index.js > index.bundle.js",
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "choo": "^6.11.0",
+    "rss": "^1.2.2"
+  },
+  "devDependencies": {
+    "browserify": "^16.2.2"
+  }
+}
