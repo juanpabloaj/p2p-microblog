@@ -1,15 +1,20 @@
-const html = require('choo/html');
-const choo = require('choo');
+const choo = require('choo')
+const html = require('choo/html')
 
-var app = choo();
+var mainView = require('./templates/main.js')
 
-app.route('/', mainView);
-app.mount('main');
+var app = choo()
 
-function mainView (state, emit) {
-  return html`
-    <main>
-    <h1>hello world ${new Date()}</h1>
-    </main>
-  `
-}
+app.use(function (state, emitter) {
+  state.posts = [{
+    title: 'post 0',
+    url: 'url000'
+  }, {
+    title: 'post 1',
+    url: 'url111'
+  }]
+  state.sources = []
+})
+
+app.route('/', mainView)
+app.mount('main')
