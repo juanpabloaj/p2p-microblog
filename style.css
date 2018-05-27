@@ -6,6 +6,10 @@
     list-style-type: none;
 }
 
+#source-list {
+    word-break: break-all;
+}
+
 .post-container {
     margin-top:20px;
     padding: 12px;
