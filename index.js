@@ -13,7 +13,10 @@ app.use(function (state, emitter) {
     title: 'post 1',
     url: 'url111'
   }]
-  state.sources = []
+  state.sources = [{
+    title: 'dat source',
+    url: 'dat://'
+  }]
 
   emitter.on('addPost', function (data) {
     state.posts.push(data)
@@ -22,6 +25,11 @@ app.use(function (state, emitter) {
 
   emitter.on('addSource', function (data) {
     state.sources.push(data)
+    emitter.emit('render')
+  })
+
+  emitter.on('removeSource', function (i) {
+    state.sources.splice(i, 1)
     emitter.emit('render')
   })
 })

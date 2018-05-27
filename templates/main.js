@@ -11,20 +11,15 @@ module.exports = function (state, emit) {
       <div id="sources" class="column column-40">
         <h4>Sources</h4>
         <form id="source-form" onsubmit=${submitSource}>
-          <input id="new-source-title" name="title"
-            type="text"
-            required
-            pattern=".{1,36}"
-          >
           <input id="new-source-url" name="url"
+            placeholder="dat://..."
             type="text"
             required
-            pattern=".{1,36}"
           >
           <input type="submit" value="Add a new source">
         </form>
         <ul id="source-list">
-          ${state.sources.map(source)}
+          ${state.sources.map(sourceMap)}
         </ul>
       </div>
       <div class="column">
@@ -41,6 +36,15 @@ module.exports = function (state, emit) {
     </div>
     </main>
   `
+
+  function sourceMap(obj, i) {
+    return source(removeSource, obj, i)
+  }
+
+  function removeSource(e) {
+    var index = e.target.id
+    emit('removeSource', index)
+  }
 
   function submitPost(e) {
     e.preventDefault()
