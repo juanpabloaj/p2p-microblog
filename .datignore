@@ -1,0 +1,6 @@
+node_modules
+.git
+.gitignore
+.jshintrc
+package.json
+index.js
