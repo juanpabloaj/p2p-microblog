@@ -4,6 +4,7 @@ module.exports = function (post, i) {
   var date = post.date
   var url = post.url || '#'
   var content = post.content || post.title
+  var source = post.source
 
   return html`
     <li>
@@ -12,6 +13,9 @@ module.exports = function (post, i) {
           ${content}
           </p>
           <div class="clearfix">
+            <div class="float-left">
+              <a href=${source}>source</a>
+            </div>
             <div class="float-right">
               <a href=${url}>${date}</a>
             </div>

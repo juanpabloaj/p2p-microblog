@@ -40,7 +40,7 @@ app.use(function (state, emitter) {
       dat.getPosts(source.url).then(posts => {
         posts.forEach(function (post) {
 
-          dat.getPostContent(post.url).then(newPost => {
+          dat.getPostContent(post).then(newPost => {
             state.posts.unshift(newPost)
             emitter.emit('render')
           })
