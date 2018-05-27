@@ -12,12 +12,7 @@ app.use(function (state, emitter) {
 
   emitter.on('addPost', function (data) {
     dat.publishPost(data.content).then(url => {
-      data.url = url
-      state.posts.push(data)
-      dat.writeJson(
-        window.location.toString(),
-        '/posts.json', {posts: state.posts}
-      )
+      dat.updatePostsFile(window.location.toString(), url)
       emitter.emit('render')
     })
   })
