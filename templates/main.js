@@ -24,7 +24,7 @@ module.exports = function (state, emit) {
       </div>
       <div class="column">
         <form id="submit-post" onsubmit=${submitPost}>
-          <textarea placeholder=" ..." name="title" id="new-post" required></textarea>
+          <textarea placeholder=" ..." name="content" id="new-post" required></textarea>
           <input type="submit" value="Create post">
         </form>
         <hr>
@@ -53,7 +53,7 @@ module.exports = function (state, emit) {
 
     var newPost = {}
     newPost.url = data.get('url')
-    newPost.title = data.get('title')
+    newPost.content = data.get('content')
     newPost.date = new Date()
 
     emit('addPost', newPost)

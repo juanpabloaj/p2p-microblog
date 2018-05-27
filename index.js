@@ -11,7 +11,7 @@ app.use(function (state, emitter) {
   state.sources = []
 
   emitter.on('addPost', function (data) {
-    dat.publishPost(data.title).then(url => {
+    dat.publishPost(data.content).then(url => {
       data.url = url
       state.posts.push(data)
       dat.writeJson(
@@ -44,8 +44,12 @@ app.use(function (state, emitter) {
     state.sources.forEach(function(source){
       dat.getPosts(source.url).then(posts => {
         posts.forEach(function (post) {
-          state.posts.unshift(post)
-          emitter.emit('render')
+
+          dat.getPostContent(post.url).then(newPost => {
+            state.posts.unshift(newPost)
+            emitter.emit('render')
+          })
+
         })
       })
     })
