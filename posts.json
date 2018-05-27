@@ -1,4 +1,1 @@
-{
-  "posts": [
-  ]
-}
+{"posts":[{"url":null,"title":"An async function can contain an await expression that pauses the execution of the async function and waits for the passed Promise's resolution, and then resumes the async function's execution and returns the resolved value.","date":"2018-05-27T17:24:04.500Z"},{"url":null,"title":"another post ","date":"2018-05-27T17:41:14.480Z"}]}

@@ -7,17 +7,8 @@ var mainView = require('./templates/main.js')
 var app = choo()
 
 app.use(function (state, emitter) {
-  state.posts = [{
-    title: 'post 0',
-    url: 'url000'
-  }, {
-    title: 'post 1',
-    url: 'url111'
-  }]
-  state.sources = [{
-    title: 'dat source',
-    url: 'dat://'
-  }]
+  state.posts = []
+  state.sources = []
 
   emitter.on('addPost', function (data) {
     state.posts.push(data)
@@ -46,8 +37,20 @@ app.use(function (state, emitter) {
     emitter.emit('render')
   })
 
+  emitter.on('getPostsFromSources', function () {
+    state.sources.forEach(function(source){
+      dat.getPosts(source.url).then(posts => {
+        posts.forEach(function (post) {
+          state.posts.unshift(post)
+          emitter.emit('render')
+        })
+      })
+    })
+  })
+
   dat.loadJson(window.location.toString(), '/sources.json').then(json => {
     state.sources = json.sources
+    emitter.emit('getPostsFromSources')
     emitter.emit('render')
   })
 })
