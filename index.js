@@ -11,12 +11,15 @@ app.use(function (state, emitter) {
   state.sources = []
 
   emitter.on('addPost', function (data) {
-    state.posts.push(data)
-    dat.writeJson(
-      window.location.toString(),
-      '/posts.json', {posts: state.posts}
-    )
-    emitter.emit('render')
+    dat.publishPost(data.title).then(url => {
+      data.url = url
+      state.posts.push(data)
+      dat.writeJson(
+        window.location.toString(),
+        '/posts.json', {posts: state.posts}
+      )
+      emitter.emit('render')
+    })
   })
 
   emitter.on('addSource', function (data) {
