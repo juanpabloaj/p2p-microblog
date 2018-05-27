@@ -21,6 +21,10 @@ app.use(function (state, emitter) {
 
   emitter.on('addPost', function (data) {
     state.posts.push(data)
+    dat.writeJson(
+      window.location.toString(),
+      '/posts.json', {posts: state.posts}
+    )
     emitter.emit('render')
   })
 

@@ -23,7 +23,7 @@ module.exports = function (state, emit) {
         </ul>
       </div>
       <div class="column">
-        <form id="login" onsubmit=${submitPost}>
+        <form id="submit-post" onsubmit=${submitPost}>
           <textarea placeholder=" ..." name="title" id="new-post" required></textarea>
           <input type="submit" value="Create post">
         </form>
