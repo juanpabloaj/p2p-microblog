@@ -1,14 +1,69 @@
 var html = require('choo/html')
 
 var post = require('./post.js')
+var source = require('./source.js')
 
 module.exports = function (state, emit) {
   return html`
     <main>
-    <h1>hello world ${new Date()}</h1>
-      <ul class="posts">
-        ${state.posts.map(post)}
-      </ul>
+    <div class="container">
+    <div class="row">
+      <div class="column column-40">
+        <h3>Sources</h3>
+        <form id="login" onsubmit=${submitSource}>
+          <input id="new-source-title" name="title"
+            type="text"
+            required
+            pattern=".{1,36}"
+          >
+          <input id="new-source-url" name="url"
+            type="text"
+            required
+            pattern=".{1,36}"
+          >
+          <input type="submit" value="Add a new source">
+        </form>
+        <ul class="source-list">
+          ${state.sources.map(source)}
+        </ul>
+      </div>
+      <div class="column">
+        <h3>Posts</h3>
+        <form id="login" onsubmit=${submitPost}>
+          <textarea placeholder=" ..." name="title" id="new-post" required></textarea>
+          <input type="submit" value="Create post">
+        </form>
+        <ul class="posts">
+          ${state.posts.map(post)}
+        </ul>
+      </div>
+    </div>
+    </div>
     </main>
   `
+
+  function submitPost(e) {
+    e.preventDefault()
+    var form = e.currentTarget
+    var data = new FormData(form)
+
+    var newPost = {}
+    newPost.url = data.get('url')
+    newPost.title = data.get('title')
+    newPost.date = new Date()
+
+    emit('addPost', newPost)
+  }
+
+  function submitSource(e) {
+    e.preventDefault()
+    var form = e.currentTarget
+    var data = new FormData(form)
+
+    var newSource = {}
+    newSource.url = data.get('url')
+    newSource.title = data.get('title')
+
+    emit('addSource', newSource)
+  }
 }

@@ -14,6 +14,16 @@ app.use(function (state, emitter) {
     url: 'url111'
   }]
   state.sources = []
+
+  emitter.on('addPost', function (data) {
+    state.posts.push(data)
+    emitter.emit('render')
+  })
+
+  emitter.on('addSource', function (data) {
+    state.sources.push(data)
+    emitter.emit('render')
+  })
 })
 
 app.route('/', mainView)
