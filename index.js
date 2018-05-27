@@ -39,6 +39,10 @@ app.use(function (state, emitter) {
 
   emitter.on('removeSource', function (i) {
     state.sources.splice(i, 1)
+    dat.writeJson(
+      window.location.toString(),
+      '/sources.json', {sources: state.sources}
+    )
     emitter.emit('render')
   })
 
