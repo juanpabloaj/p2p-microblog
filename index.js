@@ -50,9 +50,18 @@ app.use(function (state, emitter) {
     })
   })
 
+  emitter.on('getSourcesInfo', function () {
+    var result = state.sources.map(dat.getSourcesInfo)
+
+    Promise.all(result).then(updatedSources => {
+      state.sources = updatedSources
+    })
+  })
+
   dat.loadJson(window.location.toString(), '/sources.json').then(json => {
     state.sources = json.sources
     emitter.emit('getPostsFromSources')
+    emitter.emit('getSourcesInfo')
     emitter.emit('render')
   })
 })
