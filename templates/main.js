@@ -6,11 +6,11 @@ var source = require('./source.js')
 module.exports = function (state, emit) {
   return html`
     <main>
-    <div class="container">
+    <div id="main" class="container">
     <div class="row">
-      <div class="column column-40">
-        <h3>Sources</h3>
-        <form id="login" onsubmit=${submitSource}>
+      <div id="sources" class="column column-40">
+        <h4>Sources</h4>
+        <form id="source-form" onsubmit=${submitSource}>
           <input id="new-source-title" name="title"
             type="text"
             required
@@ -23,17 +23,17 @@ module.exports = function (state, emit) {
           >
           <input type="submit" value="Add a new source">
         </form>
-        <ul class="source-list">
+        <ul id="source-list">
           ${state.sources.map(source)}
         </ul>
       </div>
       <div class="column">
-        <h3>Posts</h3>
         <form id="login" onsubmit=${submitPost}>
           <textarea placeholder=" ..." name="title" id="new-post" required></textarea>
           <input type="submit" value="Create post">
         </form>
-        <ul class="posts">
+        <hr>
+        <ul id="post-list">
           ${state.posts.map(post)}
         </ul>
       </div>

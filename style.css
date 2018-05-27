@@ -1,0 +1,7 @@
+#main {
+    margin-top:48px;
+}
+
+#post-list, #source-list {
+    list-style-type: none;
+}
