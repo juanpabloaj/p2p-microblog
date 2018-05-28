@@ -35,17 +35,21 @@ app.use(function (state, emitter) {
     emitter.emit('render')
   })
 
-  emitter.on('getPostsFromSources', function () {
+  emitter.on('getPostsFromAllSources', function () {
     state.sources.forEach(function(source){
-      dat.getPosts(source.url).then(posts => {
-        posts.forEach(function (post) {
+      emitter.emit('getPostsFromSource', source.url)
+    })
+  })
 
-          dat.getPostContent(post).then(newPost => {
-            state.posts.unshift(newPost)
-            emitter.emit('render')
-          })
+  emitter.on('getPostsFromSource', function (url) {
+    dat.getPosts(url).then(posts => {
+      posts.forEach(function (post) {
 
+        dat.getPostContent(post).then(newPost => {
+          state.posts.unshift(newPost)
+          emitter.emit('render')
         })
+
       })
     })
   })
@@ -60,7 +64,18 @@ app.use(function (state, emitter) {
 
   dat.loadJson(window.location.toString(), '/sources.json').then(json => {
     state.sources = json.sources
-    emitter.emit('getPostsFromSources')
+
+    state.events = state.sources.map(source => {
+      var archive = new DatArchive(source.url)
+      var evts = archive.watch('/posts.json')
+      evts.addEventListener('changed', ({path}) => {
+        console.log(source.url, path, 'changed!')
+        emitter.emit('getPostsFromSource', source.url)
+      })
+      return {url: source.url, events: evts}
+    })
+
+    emitter.emit('getPostsFromAllSources')
     emitter.emit('getSourcesInfo')
     emitter.emit('render')
   })
