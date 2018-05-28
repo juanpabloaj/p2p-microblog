@@ -1,6 +1,7 @@
 const choo = require('choo')
 const html = require('choo/html')
 const dat = require('./lib/dat.js')
+const utils = require('./lib/utils.js')
 
 var mainView = require('./templates/main.js')
 
@@ -46,8 +47,12 @@ app.use(function (state, emitter) {
       posts.forEach(function (post) {
 
         dat.getPostContent(post).then(newPost => {
-          state.posts.unshift(newPost)
-          emitter.emit('render')
+
+          if (!utils.urlInArray(newPost.url, state.posts)) {
+            state.posts.unshift(newPost)
+            emitter.emit('render')
+          }
+
         })
 
       })
@@ -69,7 +74,6 @@ app.use(function (state, emitter) {
       var archive = new DatArchive(source.url)
       var evts = archive.watch('/posts.json')
       evts.addEventListener('changed', ({path}) => {
-        console.log(source.url, path, 'changed!')
         emitter.emit('getPostsFromSource', source.url)
       })
       return {url: source.url, events: evts}
