@@ -7,6 +7,6 @@ Distributed microblogging with [beakerbrowser].
 * Every user can subscribe to other user adding the dat url to the `sources.json` file.
 * The subscription is based on following the changes of the `posts.json` file of the other user.
 
-![p2p](https://i.imgur.com/S1bC54D.gifv)
+![p2p](https://i.imgur.com/S1bC54D.gif)
 
 [beakerbrowser]: https://beakerbrowser.com/
